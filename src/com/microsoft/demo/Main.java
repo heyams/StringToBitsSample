@@ -10,6 +10,7 @@ public class Main {
     private static Map<String, Long> mapForEncode = new HashMap<String, Long>() {{
         put("opentelemetry-javaagent-apache-httpasyncclient-4.1", 1L);
         put("opentelemetry-javaagent-apache-httpclient-2.0", 2L);
+        put("opentelemetry-javaagent-kotlinx-coroutines", 4L);
         put("opentelemetry-javaagent-apache-httpclient-4.0", 8L);
         put("opentelemetry-javaagent-apache-httpclient-5.0", 16L);
         put("opentelemetry-javaagent-applicationinsights-web-2.3", 32L);
@@ -55,11 +56,17 @@ public class Main {
         put("opentelemetry-javaagent-spring-scheduling-3.1", 35184372088832L);
         put("opentelemetry-javaagent-spring-webmvc-3.1", 70368744177664L);
         put("opentelemetry-javaagent-spring-webflux-5.0", 140737488355328L);
+        put("opentelemetry-javaagent-mongo-common", 281474976710656L);
+        put("opentelemetry-javaagent-opentelemetry-annotations-1.0", 562949953421312L);
+        put("opentelemetry-javaagent-reactor-netty-0.9", 1125899906842624L);
+        put("opentelemetry-javaagent-reactor-netty-1.0", 2251799813685248L);
+        put("opentelemetry-javaagent-tomcat-7.0", 4503599627370496L);
     }};
 
     private static Map<Long, String> mapForDecoding = new HashMap<Long, String>() {{
         put(1L, "opentelemetry-javaagent-apache-httpasyncclient-4.1");
         put(2L, "opentelemetry-javaagent-apache-httpclient-2.0");
+        put(4L, "opentelemetry-javaagent-kotlinx-coroutines");
         put(8L, "opentelemetry-javaagent-apache-httpclient-4.0");
         put(16L, "opentelemetry-javaagent-apache-httpclient-5.0");
         put(32L, "opentelemetry-javaagent-applicationinsights-web-2.3");
@@ -105,6 +112,11 @@ public class Main {
         put(35184372088832L, "opentelemetry-javaagent-spring-scheduling-3.1");
         put(70368744177664L, "opentelemetry-javaagent-spring-webmvc-3.1");
         put(140737488355328L, "opentelemetry-javaagent-spring-webflux-5.0");
+        put(281474976710656L, "opentelemetry-javaagent-mongo-common");
+        put(562949953421312L, "opentelemetry-javaagent-opentelemetry-annotations-1.0");
+        put(1125899906842624L, "opentelemetry-javaagent-reactor-netty-0.9");
+        put(2251799813685248L, "opentelemetry-javaagent-reactor-netty-1.0");
+        put(4503599627370496L, "opentelemetry-javaagent-tomcat-7.0");
     }};
 
     private static long encode(Set<String> instrumentations) {
@@ -143,13 +155,10 @@ public class Main {
 //        printTwoToPowerOf(64);
 
         Set<String> instrumentations = new HashSet<String>() {{
-            add("opentelemetry-javaagent-azure-functions");
-            add("opentelemetry-javaagent-apache-httpasyncclient-4.1");
-            add("opentelemetry-javaagent-apache-httpclient-5.0");
-            add("opentelemetry-javaagent-spring-webflux-5.0");
-            add("opentelemetry-javaagent-servlet-2.2");
-            add("opentelemetry-javaagent-jedis-1.4");
+            add("opentelemetry-javaagent-reactor-netty-1.0");
+            add("opentelemetry-javaagent-kotlinx-coroutines");
             add("opentelemetry-javaagent-mongo-async-3.3");
+            add("opentelemetry-javaagent-mongo-common");
         }};
 
         System.out.println("\n############## encoding ##############");
