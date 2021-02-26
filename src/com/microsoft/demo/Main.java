@@ -20,7 +20,7 @@ public class Main {
         put("opentelemetry-javaagent-azure-functions", 64L);
         put("opentelemetry-javaagent-cassandra-3.0", 128L);
         put("opentelemetry-javaagent-cassandra-4.0", 256L);
-        put("'opentelemetry-javaagent-classloaders", 512L);
+        put("opentelemetry-javaagent-classloaders", 512L);
         put("opentelemetry-javaagent-executors", 1024L);
         put("opentelemetry-javaagent-grpc-1.5", 2048L);
         put("opentelemetry-javaagent-http-url-connection", 4096L);
@@ -79,7 +79,7 @@ public class Main {
         put(64L, "opentelemetry-javaagent-azure-functions");
         put(128L, "opentelemetry-javaagent-cassandra-3.0");
         put(256L, "opentelemetry-javaagent-cassandra-4.0");
-        put(512L, "'opentelemetry-javaagent-classloaders");
+        put(512L, "opentelemetry-javaagent-classloaders");
         put(1024L, "opentelemetry-javaagent-executors");
         put(2048L, "opentelemetry-javaagent-grpc-1.5");
         put(4096L, "opentelemetry-javaagent-http-url-connection");
