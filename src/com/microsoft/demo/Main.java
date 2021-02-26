@@ -7,6 +7,9 @@ import java.util.Set;
 
 public class Main {
 
+    /**
+     * source https://github.com/microsoft/ApplicationInsights-Java/blob/master/agent/instrumentation/build.gradle
+     */
     private static Map<String, Long> mapForEncode = new HashMap<String, Long>() {{
         put("opentelemetry-javaagent-apache-httpasyncclient-4.1", 1L);
         put("opentelemetry-javaagent-apache-httpclient-2.0", 2L);
@@ -63,6 +66,9 @@ public class Main {
         put("opentelemetry-javaagent-tomcat-7.0", 4503599627370496L);
     }};
 
+    /**
+     * source https://github.com/microsoft/ApplicationInsights-Java/blob/master/agent/instrumentation/build.gradle
+     */
     private static Map<Long, String> mapForDecoding = new HashMap<Long, String>() {{
         put(1L, "opentelemetry-javaagent-apache-httpasyncclient-4.1");
         put(2L, "opentelemetry-javaagent-apache-httpclient-2.0");
