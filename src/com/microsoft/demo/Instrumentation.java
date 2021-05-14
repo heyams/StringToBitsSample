@@ -1,18 +1,16 @@
 package com.microsoft.demo;
 
-import java.util.Base64;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Main {
+public class Instrumentation {
 
     /**
      * source https://github.com/microsoft/ApplicationInsights-Java/blob/master/agent/instrumentation/build.gradle
      */
-    private static final Map<String, Integer> MAP_FOR_ENDCODE = new HashMap<String, Integer>() {{
+    private static final Map<String, Integer> INSTRUMENTATION_MAP_ENCODING = new HashMap<String, Integer>() {{
         put("io.opentelemetry.javaagent.apache-httpasyncclient-4.1", 0);
         put("io.opentelemetry.javaagent.apache-httpclient-2.0", 1);
         put("io.opentelemetry.javaagent.apache-httpclient-4.0", 2);
@@ -73,7 +71,7 @@ public class Main {
         put("io.opentelemetry.javaagent.tomcat-7.0", 57);
     }};
 
-    public static final Map<Integer, String> MAP_FOR_DECODE = new HashMap<>() {{
+    public static final Map<Integer, String> INSTRUMENTATION_MAP_DECODING = new HashMap<>() {{
         put(0, "io.opentelemetry.javaagent.apache-httpasyncclient-4.1");
         put(1, "io.opentelemetry.javaagent.apache-httpclient-2.0");
         put(2, "io.opentelemetry.javaagent.apache-httpclient-4.0");
@@ -134,42 +132,6 @@ public class Main {
         put(57, "io.opentelemetry.javaagent.tomcat-7.0");
     }};
 
-    private static String encode(Set<String> instrumentations) {
-        BitSet bitSet = new BitSet(64);
-        for (String instrumentation : instrumentations) {
-            int index = MAP_FOR_ENDCODE.get(instrumentation);
-            bitSet.set(index);
-        }
-
-        long[] longArray = bitSet.toLongArray();
-        System.out.println("long: " + longArray[0] + "\n");
-
-        return Base64.getEncoder().withoutPadding().encodeToString(bitSet.toByteArray());
-    }
-
-    private static long decodeBase64EncodedStringAsLong(String base64EncodedString) {
-        byte[] bytes = Base64.getDecoder().decode(base64EncodedString.getBytes());
-        long result = 0;
-        for (int i = 0; i < bytes.length; i++) {
-            result += ((long) bytes[i] & 0xffL) << (8 * i); // use Big Endian Byte Order.
-        }
-        return result;
-    }
-
-    private static Set<String> decode(String base64EncodedString) {
-        long num = decodeBase64EncodedStringAsLong(base64EncodedString);
-        Set<String> result = new HashSet<>();
-        for(Map.Entry<Integer, String> entry: MAP_FOR_DECODE.entrySet()) {
-            double value = entry.getKey();
-            long powerVal = (long) Math.pow(2, value);
-            if ((powerVal & num) == powerVal) {
-                result.add(entry.getValue());
-            }
-        }
-
-        return result;
-    }
-
     public static void main(String[] args) {
         Set<String> instrumentations = new HashSet<>() {{
             add("io.opentelemetry.javaagent.tomcat-7.0");
@@ -179,10 +141,10 @@ public class Main {
 
         System.out.println("Expected instrumentations: ");
         System.out.println(instrumentations + "\n");
-        String base64EncodedString = encode(instrumentations);
+        String base64EncodedString = Utils.encode(instrumentations, INSTRUMENTATION_MAP_ENCODING);
         System.out.println("convert long to base64 encoded string: " + base64EncodedString + "\n");
         System.out.println("Actual instrumentations: ");
-        Set<String> decodedInstrumentations = decode(base64EncodedString);
+        Set<String> decodedInstrumentations = Utils.decode(base64EncodedString, INSTRUMENTATION_MAP_DECODING);
         assert (instrumentations.equals(decodedInstrumentations));
         System.out.println(decodedInstrumentations);
     }
